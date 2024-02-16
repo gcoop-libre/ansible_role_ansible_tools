@@ -1,0 +1,20 @@
+---
+
+- name: (ansible_tools) set ansible tools directory permissions
+  file:
+    path:  "{{ ansible_tools_dir }}"
+    owner: "{{ ansible_tools_dir_owner }}"
+    group: "{{ ansible_tools_dir_group }}"
+    mode:  "{{ ansible_tools_dir_mode  }}"
+    state: directory
+    recurse: no
+  become: yes
+
+- name: (ansible_tools) set ansible tools files permissions
+  file:
+    path:  "{{ ansible_tools_dir }}"
+    owner: "{{ ansible_tools_dir_owner }}"
+    group: "{{ ansible_tools_dir_group }}"
+    state: directory
+    recurse: yes
+  become: yes
