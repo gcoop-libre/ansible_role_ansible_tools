@@ -1,0 +1,19 @@
+---
+
+- name: (ansible_tools) generate awx-config example
+  command: "{{ ansible_tools_dir }}/awx-config -c"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+
+- name: (ansible_tools) generate tower_cli.cfg
+  template:
+    src: templates/tower_cli.cfg.j2
+    dest: "{{ ansible_tools_user_home }}/.tower_cli.cfg"
+    group: "{{ ansible_tools_tower_config_group }}"
+    mode: "{{ ansible_tools_tower_config_mode }}"
+    owner: "{{ ansible_tools_tower_config_owner }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  when:
+    - ansible_tools_tower_config is defined
+    - ansible_tools_tower_config | bool
