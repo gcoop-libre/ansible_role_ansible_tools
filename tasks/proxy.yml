@@ -1,0 +1,39 @@
+---
+
+- name: (ansible_tools) fail on invalid proxy host
+  fail:
+    msg: remove http:// from ansible_tools_http_proxy_host variable
+  when: '"http" in ansible_tools_http_proxy_host'
+
+- name: (ansible_tools) set anonymous proxy url
+  set_fact:
+    ansible_tools_http_proxy_url: "{{ ansible_tools_http_proxy_host }}:{{ ansible_tools_http_proxy_port }}"
+  when:
+    - ansible_tools_http_proxy_host is defined
+    - ansible_tools_http_proxy_port is defined
+
+- name: (ansible_tools) set proxy url with credentials
+  set_fact:
+    ansible_tools_http_proxy_url: "{{ ansible_tools_http_proxy_user }}:{{ ansible_tools_http_proxy_pass }}@{{ ansible_tools_http_proxy_url }}"
+  no_log: "{{ ansible_tools_no_log }}"
+  when:
+    - ansible_tools_http_proxy_host is defined
+    - ansible_tools_http_proxy_port is defined
+    - ansible_tools_http_proxy_user is defined
+    - ansible_tools_http_proxy_user | length > 0
+
+- name: (ansible_tools) set proxy url protocol
+  set_fact:
+    ansible_tools_http_proxy_url: "http://{{ ansible_tools_http_proxy_url }}"
+  no_log: "{{ ansible_tools_no_log }}"
+  when:
+    - ansible_tools_http_proxy_url is defined
+    - ansible_tools_http_proxy_url | length > 0
+
+- name: (ansible_tools) define http proxy environment
+  set_fact:
+    ansible_tools_http_proxy_env:
+      GIT_SSL_NO_VERIFY: true
+      http_proxy:  "{{ ansible_tools_http_proxy_url }}"
+      https_proxy: "{{ ansible_tools_http_proxy_url }}"
+  no_log: "{{ ansible_tools_no_log }}"
