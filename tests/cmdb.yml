@@ -1,0 +1,14 @@
+---
+
+- name: Generate CMDB from AWX
+  hosts: [all]
+  become: yes
+  gather_facts: false
+
+  tasks:
+
+    - name: (ansible_tools) include cmdb tasks
+      include_tasks: ../tasks/cmdb.yml
+      when:
+        - ansible_tools_cmdb is defined
+        - ansible_tools_cmdb | bool
