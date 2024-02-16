@@ -1,0 +1,24 @@
+---
+
+galaxy_info:
+  author: Osiris Alejandro Gomez
+  description: Ansible role for install and configure Ansible Tools
+  role_name: ansible_tools
+  company: gcoop Cooperativa de Software Libre
+  license: GPLv3
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - 11
+  galaxy_tags:
+    - ansible
+    - ansible-cmdb
+    - ansible-tower
+    - awx
+    - cmdb
+    - deploy
+    - json
+    - tools
+    - yaml
+dependencies:
