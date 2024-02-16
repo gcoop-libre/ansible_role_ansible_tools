@@ -1,0 +1,9 @@
+---
+
+ansible_tools_user_comment: automate all the things
+ansible_tools_user_groups: ansible
+ansible_tools_user_home: /home/ansible
+ansible_tools_user_password: ansible
+ansible_tools_user_shell: /bin/bash
+ansible_tools_user_username: ansible
+ansible_tools_user: true
