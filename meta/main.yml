@@ -13,12 +13,11 @@ galaxy_info:
         - 11
   galaxy_tags:
     - ansible
-    - ansible-cmdb
-    - ansible-tower
     - awx
     - cmdb
     - deploy
     - json
     - tools
+    - tower
     - yaml
 dependencies:
