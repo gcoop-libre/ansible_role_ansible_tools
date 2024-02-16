@@ -1,0 +1,17 @@
+---
+
+ansible_tools_git_clean_untracked: false
+ansible_tools_git_clone: true
+ansible_tools_git_config: "{{ ansible_tools_dir }}/.git/config"
+ansible_tools_git_force: true
+ansible_tools_git_prefix: https://
+ansible_tools_git_repo: gitlab.com/gcoop-libre/ansible_tools.git
+ansible_tools_git_repo_rm_token: true
+ansible_tools_git_token: false
+ansible_tools_git_token_token: 53cr3t
+ansible_tools_git_token_user: gitlab+deploy-token-1
+ansible_tools_git_umask: '0022'
+ansible_tools_git_update: true
+ansible_tools_git_version: master
+ansible_tools_git_environment:
+  GIT_SSL_NO_VERIFY: true
