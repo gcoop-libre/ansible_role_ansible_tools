@@ -1,0 +1,104 @@
+---
+
+- name: (ansible_tools) define url without token
+  set_fact:
+    ansible_tools_git_repo: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_repo }}"
+  no_log: "{{ ansible_tools_no_log }}"
+  when:
+    - not ansible_tools_git_token | bool
+    - ansible_tools_git_prefix is defined
+
+- name: (ansible_tools) define url with token
+  set_fact:
+    ansible_tools_git_repo_no_token: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_repo }}"
+    ansible_tools_git_repo: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_token_user }}:{{ ansible_tools_git_token_token }}@{{ ansible_tools_git_repo }}"
+  no_log: "{{ ansible_tools_no_log }}"
+  when:
+    - ansible_tools_git_token is defined
+    - ansible_tools_git_token | bool
+    - ansible_tools_git_prefix is defined
+    - ansible_tools_git_token_user is defined
+    - ansible_tools_git_token_user | length > 0
+    - ansible_tools_git_token_token is defined
+    - ansible_tools_git_token_token | length > 0
+
+- name: (ansible_tools) verify {{ ansible_tools_dir }} directory exists
+  stat:
+    path: "{{ ansible_tools_dir }}"
+  changed_when: false
+  ignore_errors: true
+  register: git_repo_dir
+
+- name: (ansible_tools) verify {{ ansible_tools_dir }} is git repository
+  shell: git rev-parse --is-inside-work-tree
+  args:
+    chdir: "{{ ansible_tools_dir }}"
+  changed_when: false
+  ignore_errors: true
+  register: git_repo_config
+  when:
+    - git_repo_dir is defined
+    - git_repo_dir.stat.exists | bool
+
+- name: (ansible_tools) backup current directory {{ ansible_tools_dir }}
+  shell: "mv -v {{ ansible_tools_dir }} {{ ansible_tools_dir_backup }}"
+  become: true
+  when:
+    - git_repo_dir is defined
+    - git_repo_config is defined
+    - git_repo_dir.stat.exists | bool
+    - git_repo_config.failed | bool
+    - git_repo_backup is defined
+    - git_repo_backup | bool
+
+- name: (ansible_tools) remove untracked files from directory {{ ansible_tools_dir }}
+  command: git clean -f
+  args:
+    chdir: "{{ ansible_tools_dir }}"
+  become: true
+  when:
+    - git_repo_dir is defined
+    - git_repo_config is defined
+    - git_repo_dir.stat.exists | bool
+    - not git_repo_config.failed | bool
+    - ansible_tools_git_clean_untracked | bool
+
+- name: (ansible_tools) clone ansible_tools repository
+  git:
+    repo: "{{ ansible_tools_git_repo }}"
+    dest: "{{ ansible_tools_dir }}"
+    force: "{{ ansible_tools_git_force }}"
+    umask: "{{ ansible_tools_git_umask }}"
+    update: "{{ ansible_tools_git_update }}"
+    version: "{{ ansible_tools_git_version | default('master') }}"
+  no_log: "{{ ansible_tools_no_log }}"
+  environment: "{{ ansible_tools_http_proxy_env }}"
+  when:
+    - ansible_tools_git_repo is defined
+    - ansible_tools_git_repo |  length > 0
+    - ansible_tools_dir is defined
+
+- name: (ansible_tools) show last commit
+  command: git log -1
+  args:
+    chdir: "{{ ansible_tools_dir }}"
+  become: true
+  when:
+    - ansible_tools_git_repo is defined
+    - ansible_tools_git_repo |  length > 0
+    - ansible_tools_dir is defined
+
+- name: (ansible_tools) remove token from git url origin
+  lineinfile:
+    path: "{{ ansible_tools_dir }}/.git/config"
+    regexp: "^.*url = .*"
+    line: "\turl = {{ ansible_tools_git_repo_no_token }}"
+    firstmatch: yes
+    state: present
+  no_log: "{{ ansible_tools_no_log }}"
+  become: true
+  when:
+    - ansible_tools_git_repo_rm_token is defined
+    - ansible_tools_git_repo_rm_token | bool
+    - ansible_tools_git_repo_no_token is defined
+    - ansible_tools_git_repo is defined
