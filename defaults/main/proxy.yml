@@ -1,0 +1,11 @@
+---
+
+ansible_tools_http_proxy: false
+ansible_tools_http_proxy_disable: true
+ansible_tools_http_proxy_env: []
+ansible_tools_http_proxy_host: []
+ansible_tools_http_proxy_ipv4: false
+ansible_tools_http_proxy_pass: []
+ansible_tools_http_proxy_port: 3128
+ansible_tools_http_proxy_user: []
+ansible_tools_http_proxy_yum: false
