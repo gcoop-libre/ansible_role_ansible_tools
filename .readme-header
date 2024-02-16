@@ -1,0 +1,6 @@
+# Ansible Role: `gcoop-libre.ansible_tools`
+
+This role, install and configure useful scripts for _Ansible_ from `ansible_tools` git repository.
+
+## Tags Summary
+
