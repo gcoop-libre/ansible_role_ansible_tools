@@ -1,0 +1,10 @@
+---
+
+- name: (ansible_tools) ensure required packages are installed
+  package:
+    name: "{{ ansible_tools_packages }}"
+    state: present
+  become: yes
+  when:
+    - ansible_tools_packages is defined
+    - ansible_tools_packages | length > 0
