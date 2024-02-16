@@ -1,0 +1,25 @@
+---
+
+ansible_tools_packages:
+  - coreutils
+  - curl
+  - git
+  - gpg
+  - jq
+  - jsonlint
+  - moreutils
+  - pass
+  - pv
+  - python3-pip
+  - tree
+  - yamllint
+
+ansible_tools_pip_packages:
+  - ansible==2.9.15
+  - ansible-cmdb==1.31
+  - ansible-lint==4.2.0
+  - ansible-tower-cli==3.3.9
+  - backports.functools-lru-cache==1.5
+  - configparser==4.0.2
+  - Jinja2==3.0.3
+  - yq==2.12.2
