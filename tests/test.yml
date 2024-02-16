@@ -1,0 +1,33 @@
+---
+
+- name: Install and Configure Ansible Tools
+  hosts: [all]
+  become: yes
+  gather_facts: false
+
+  pre_tasks:
+
+  - name: verify python3
+    raw: command -v {{ python_python3_bin | default('/usr/bin/python3') }}
+    args:
+      executable: /bin/bash
+    ignore_errors: true
+    register: python_result3
+    changed_when: false
+
+  - name: install python 3
+    raw: apt install -y {{ python_python3_pkg | default('python3') }}
+    args:
+      executable: /bin/bash
+    changed_when: false
+    when:
+      - python_result3 is defined
+      - python_result3.failed
+
+  - name: (ansible_tools) get facts
+    setup:
+      gather_subset: all
+
+  roles:
+
+    - role: gcoop-libre.ansible_tools
