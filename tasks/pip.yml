@@ -1,0 +1,48 @@
+---
+
+- name: (ansible_tools) ensure pip required packages are installed
+  pip:
+    name: "{{ ansible_tools_pip_packages }}"
+  become: yes
+  when:
+    - ansible_tools_pip_packages is defined
+    - ansible_tools_pip_packages | length > 0
+
+- name: (ansible_tools) list pip installed packages
+  command: pip list
+  become: yes
+
+- name: (ansible_tools) verify ansible-cmdb is installed
+  stat:
+    path: /usr/local/bin/ansible-cmdb
+  ignore_errors: true
+  register: ansible_cmdb_result
+  become: true
+
+- name: (ansible_tools) patch python bin path for ansible-cmdb
+  lineinfile:
+    path: /usr/local/bin/ansible-cmdb
+    regexp: '    which.*a.*python.*while read.*TRY_PY_BIN'
+    line: '    which -a python3 | while read -r TRY_PY_BIN'
+    firstmatch: true
+    state: present
+  become: yes
+  when:
+    - ansible_cmdb_result is defined
+    - not ansible_cmdb_result.failed | bool
+    - ansible_cmdb_result.stat is defined
+    - ansible_cmdb_result.stat.exists | bool
+    - ansible_tools_cmdb_bin_patch_checksums is defined
+    - ansible_tools_cmdb_bin_patch_checksums | length > 0
+    - ansible_cmdb_result.stat.checksum in ansible_tools_cmdb_bin_patch_checksums
+
+- name: (ansible_tools) check ansible binaries installed versions
+  command: "{{ item }} --version"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  loop:
+    - ansible
+    - ansible-cmdb
+    - awx-cli
+    - jq
+    - yq
