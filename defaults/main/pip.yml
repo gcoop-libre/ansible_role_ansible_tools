@@ -1,0 +1,5 @@
+---
+
+ansible_tools_pip_install: true
+ansible_tools_cmdb_bin_patch_checksums:
+  - 'fa1f0e41409dfec6d9efd2b17ef3738019e556dd'
