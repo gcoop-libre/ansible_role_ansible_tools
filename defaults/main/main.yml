@@ -1,0 +1,11 @@
+---
+
+ansible_tools_dir: /opt/ansible_tools
+ansible_tools_dir_backup: "{{ ansible_tools_dir }}-{{ ansible_date_time.epoch }}.bak"
+ansible_tools_dir_group: ansible
+ansible_tools_dir_mode: '0750'
+ansible_tools_dir_owner: ansible
+ansible_tools_facts2cmdb_cmd: "{{ ansible_tools_dir }}/awx-facts2cmdb"
+ansible_tools_group: ansible
+ansible_tools_no_log: false
+ansible_tools_packages_install: true
