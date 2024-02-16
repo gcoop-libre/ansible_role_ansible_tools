@@ -1,0 +1,20 @@
+---
+
+ansible_tools_awx_config: true
+ansible_tools_awx_config_group: ansible
+ansible_tools_awx_config_mode: '0600'
+ansible_tools_awx_config_owner: ansible
+ansible_tools_config: true
+ansible_tools_config_dir: /home/{{ ansible_tools_username }}
+ansible_tools_config_file: "{{ ansible_tools_config_dir }}/.awx-config"
+ansible_tools_config_group: ansible
+ansible_tools_config_mode: '0640'
+ansible_tools_config_owner: ansible
+ansible_tools_tower_config: true
+ansible_tools_tower_config_group: ansible
+ansible_tools_tower_config_host: http://example.org/
+ansible_tools_tower_config_mode: '0600'
+ansible_tools_tower_config_owner: ansible
+ansible_tools_tower_config_password: ansible
+ansible_tools_tower_config_username: ansible
+ansible_tools_tower_config_verify_ssl: false
