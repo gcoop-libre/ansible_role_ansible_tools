@@ -1,0 +1,19 @@
+---
+
+- name: (ansible_tools) create ansible system user
+  user:
+    name: '{{ ansible_tools_user_username }}'
+    home: '{{ ansible_tools_user_home }}'
+    shell: '{{ ansible_tools_user_shell }}'
+    comment: '{{ ansible_tools_user_comment }}'
+    password: '{{ ansible_tools_user_password | string | password_hash("sha512") }}'
+    state: present
+    append: yes
+
+- name: (ansible_tools) add PATH for ansible_tools for ansible user
+  lineinfile:
+    line: '[[ -d {{ ansible_tools_dir }} ]] && PATH="{{ ansible_tools_dir }}:$PATH"'
+    path: "{{ ansible_tools_user_home }}/.profile"
+    state: present
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
