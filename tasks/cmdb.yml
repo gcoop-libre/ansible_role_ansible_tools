@@ -1,0 +1,19 @@
+---
+
+- name: (ansible_tools) ensure output directory exists
+  file:
+    path: "{{ ansible_tools_cmdb_dir | default('/var/www/html') }}"
+    owner: "{{ ansible_tools_cmdb_dir_owner | default('ansible') }}"
+    mode: "{{ ansible_tools_cmdb_dir_mode | default('0750') }}"
+    group: "{{ ansible_tools_cmdb_dir_group | default('ansible') }}"
+    state: directory
+  become: yes
+
+- name: (ansible_tools) execute awx-facts2cmdb
+  command: "{{ ansible_tools_dir | default('/opt/ansible_tools') }}/awx-facts2cmdb {{ item }} {{ ansible_tools_cmdb_group | default('.*') }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username | default('ansible') }}"
+  loop: "{{ ansible_tools_cmdb_inventories }}"
+  when:
+    - ansible_tools_cmdb_inventories is defined
+    - ansible_tools_cmdb_inventories | length > 0
