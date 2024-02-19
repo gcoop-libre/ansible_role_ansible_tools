@@ -20,7 +20,6 @@
     - ansible_tools_git_token_user is defined
     - ansible_tools_git_token_user | length > 0
     - ansible_tools_git_token_token is defined
-    - ansible_tools_git_token_token | length > 0
 
 - name: (ansible_tools) verify {{ ansible_tools_dir }} directory exists
   stat:
