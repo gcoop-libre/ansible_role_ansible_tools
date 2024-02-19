@@ -18,8 +18,8 @@
     - ansible_tools_tower_config is defined
     - ansible_tools_tower_config | bool
 
-- name: (ansible_tools) test config
-  command: "{{ ansible_tools_config_test_command }}"
+- name: (ansible_tools) test credentials in tower_cli.cfg
+  command: "{{ ansible_tools_tower_config_test_command }}"
   become: yes
   become_user: "{{ ansible_tools_user_username }}"
   when:
