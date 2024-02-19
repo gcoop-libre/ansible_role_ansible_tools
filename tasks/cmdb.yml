@@ -11,6 +11,7 @@
 
 - name: (ansible_tools) execute awx-facts2cmdb
   command: "{{ ansible_tools_dir | default('/opt/ansible_tools') }}/awx-facts2cmdb {{ item }} {{ ansible_tools_cmdb_group | default('.*') }}"
+  environment: "{{ ansible_tools_http_proxy_env }}"
   become: yes
   become_user: "{{ ansible_tools_user_username | default('ansible') }}"
   loop: "{{ ansible_tools_cmdb_inventories }}"
