@@ -18,3 +18,5 @@ ansible_tools_tower_config_owner: ansible
 ansible_tools_tower_config_password: ansible
 ansible_tools_tower_config_username: ansible
 ansible_tools_tower_config_verify_ssl: false
+ansible_tools_tower_config_test: true
+ansible_tools_tower_config_test_command: "awx-cli user get {{ ansible_tools_tower_config_username }}"
