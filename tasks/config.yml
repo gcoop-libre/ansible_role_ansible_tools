@@ -17,3 +17,11 @@
   when:
     - ansible_tools_tower_config is defined
     - ansible_tools_tower_config | bool
+
+- name: (ansible_tools) test config
+  command: "{{ ansible_tools_config_test_command }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  when:
+    - ansible_tools_tower_config_test is defined
+    - ansible_tools_tower_config_test | bool
