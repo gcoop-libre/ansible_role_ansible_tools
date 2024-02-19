@@ -3,6 +3,7 @@
 - name: (ansible_tools) ensure pip required packages are installed
   pip:
     name: "{{ ansible_tools_pip_packages }}"
+  environment: "{{ ansible_tools_http_proxy_env }}"
   become: yes
   when:
     - ansible_tools_pip_packages is defined
