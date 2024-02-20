@@ -7,6 +7,12 @@
 
   tasks:
 
+    - name: (ansible_tools) include proxy tasks
+      include_tasks: ../tasks/proxy.yml
+      when:
+        - ansible_tools_http_proxy is defined
+        - ansible_tools_http_proxy | bool
+
     - name: (ansible_tools) include cmdb tasks
       include_tasks: ../tasks/cmdb.yml
       when:
