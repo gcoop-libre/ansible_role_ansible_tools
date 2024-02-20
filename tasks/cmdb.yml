@@ -15,6 +15,7 @@
     INDEX_ONLY={{ ansible_tools_cmdb_index_only | default('0') }}
     CMDB_TITLE="{{ ansible_tools_cmdb_title | default('CMDB') }}"
     CMDB_GROUP_LABEL="{{ ansible_tools_cmdb_group_label | default('group') }}"
+    CMDB_GROUP_DESC="{{ ansible_tools_cmdb_group_description | default('description') }}"
     {{ ansible_tools_dir | default('/opt/ansible_tools') }}/awx-facts2cmdb
     {{ item }}
     {{ ansible_tools_cmdb_group | default('.*') }}
