@@ -3,7 +3,7 @@
 - name: (ansible_tools) define url without token
   set_fact:
     ansible_tools_git_repo: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_repo }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   when:
     - not ansible_tools_git_token | bool
     - ansible_tools_git_prefix is defined
@@ -12,7 +12,7 @@
   set_fact:
     ansible_tools_git_repo_no_token: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_repo }}"
     ansible_tools_git_repo: "{{ ansible_tools_git_prefix }}{{ ansible_tools_git_token_user }}:{{ ansible_tools_git_token_token }}@{{ ansible_tools_git_repo }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   when:
     - ansible_tools_git_token is defined
     - ansible_tools_git_token | bool
@@ -70,7 +70,7 @@
     umask: "{{ ansible_tools_git_umask }}"
     update: "{{ ansible_tools_git_update }}"
     version: "{{ ansible_tools_git_version | default('master') }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   environment: "{{ ansible_tools_http_proxy_env }}"
   when:
     - ansible_tools_git_repo is defined
@@ -94,7 +94,7 @@
     line: "\turl = {{ ansible_tools_git_repo_no_token }}"
     firstmatch: yes
     state: present
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   become: true
   when:
     - ansible_tools_git_repo_rm_token is defined
