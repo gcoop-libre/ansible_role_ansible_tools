@@ -12,6 +12,7 @@
 - name: (ansible_tools) execute awx-facts2cmdb
   shell: >
     INDEX_UPDATE={{ ansible_tools_cmdb_index_update | default('0') }}
+    INDEX_ONLY={{ ansible_tools_cmdb_index_only | default('0') }}
     {{ ansible_tools_dir | default('/opt/ansible_tools') }}/awx-facts2cmdb
     {{ item }}
     {{ ansible_tools_cmdb_group | default('.*') }}
