@@ -15,7 +15,7 @@
 - name: (ansible_tools) set proxy url with credentials
   set_fact:
     ansible_tools_http_proxy_url: "{{ ansible_tools_http_proxy_user }}:{{ ansible_tools_http_proxy_pass }}@{{ ansible_tools_http_proxy_url }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   when:
     - ansible_tools_http_proxy_host is defined
     - ansible_tools_http_proxy_port is defined
@@ -25,7 +25,7 @@
 - name: (ansible_tools) set proxy url protocol
   set_fact:
     ansible_tools_http_proxy_url: "http://{{ ansible_tools_http_proxy_url }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
   when:
     - ansible_tools_http_proxy_url is defined
     - ansible_tools_http_proxy_url | length > 0
@@ -36,4 +36,4 @@
       GIT_SSL_NO_VERIFY: true
       http_proxy:  "{{ ansible_tools_http_proxy_url }}"
       https_proxy: "{{ ansible_tools_http_proxy_url }}"
-  no_log: "{{ ansible_tools_no_log }}"
+  no_log: "{{ ansible_tools_no_log | default(true) }}"
