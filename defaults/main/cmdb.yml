@@ -3,3 +3,4 @@
 ansible_tools_cmdb: false
 ansible_tools_cmdb_inventories: []
 ansible_tools_cmdb_index_update: 1
+ansible_tools_cmdb_index_only: 0
