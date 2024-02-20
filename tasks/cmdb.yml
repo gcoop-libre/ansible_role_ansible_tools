@@ -4,7 +4,7 @@
   file:
     path: "{{ ansible_tools_cmdb_dir | default('/var/www/html') }}"
     owner: "{{ ansible_tools_cmdb_dir_owner | default('ansible') }}"
-    mode: "{{ ansible_tools_cmdb_dir_mode | default('0750') }}"
+    mode: "{{ ansible_tools_cmdb_dir_mode | default('0755') }}"
     group: "{{ ansible_tools_cmdb_dir_group | default('ansible') }}"
     state: directory
   become: yes
