@@ -7,6 +7,12 @@
 
   tasks:
 
+    - name: (ansible_tools) include config tasks
+      include_tasks: ../tasks/config.yml
+      when:
+        - ansible_tools_config is defined
+        - ansible_tools_config | bool
+
     - name: (ansible_tools) include proxy tasks
       include_tasks: ../tasks/proxy.yml
       when:
