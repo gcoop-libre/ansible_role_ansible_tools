@@ -74,6 +74,7 @@
     {{ ansible_tools_cmdb_host | default('.*') }}
   args:
     executable: "{{ ansible_tools_user_shell | default('/bin/bash') }}"
+    chdir: "{{ ansible_tools_user_home | default('/home/ansible') }}"
   environment: "{{ ansible_tools_http_proxy_env }}"
   become: yes
   become_user: "{{ ansible_tools_user_username | default('ansible') }}"
