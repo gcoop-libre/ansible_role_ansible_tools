@@ -45,6 +45,22 @@
     - ansible_tools_cmdb_static_images_files is defined
     - ansible_tools_cmdb_static_images_files | length > 0
 
+- name: (ansible_tools) copy CMDB static js files
+  template:
+    src: ../templates/cmdb/static/js/{{ item }}
+    dest: "{{ ansible_tools_cmdb_static_js_dir | default('/var/www/html/static/js') }}"
+    owner: "{{ ansible_tools_cmdb_dir_owner | default('ansible') }}"
+    mode: "{{ ansible_tools_cmdb_dir_mode | default('0755') }}"
+    group: "{{ ansible_tools_cmdb_dir_group | default('ansible') }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  loop: "{{ ansible_tools_cmdb_static_js_files }}"
+  when:
+    - ansible_tools_cmdb_static_js is defined
+    - ansible_tools_cmdb_static_js | bool
+    - ansible_tools_cmdb_static_js_files is defined
+    - ansible_tools_cmdb_static_js_files | length > 0
+
 - name: (ansible_tools) execute awx-facts2cmdb
   shell: >
     INDEX_UPDATE={{ ansible_tools_cmdb_index_update | default('0') }}
