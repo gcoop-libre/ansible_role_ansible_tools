@@ -8,7 +8,7 @@
 - name: (ansible_tools) generate tower_cli.cfg
   template:
     src: templates/tower_cli.cfg.j2
-    dest: "{{ ansible_tools_user_home }}/.tower_cli.cfg"
+    dest: "{{ ansible_tools_user_home | default('/home/ansible') }}/.tower_cli.cfg"
     group: "{{ ansible_tools_tower_config_group }}"
     mode: "{{ ansible_tools_tower_config_mode }}"
     owner: "{{ ansible_tools_tower_config_owner }}"
