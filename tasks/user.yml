@@ -2,11 +2,11 @@
 
 - name: (ansible_tools) create ansible system user
   user:
-    name: '{{ ansible_tools_user_username }}'
-    home: '{{ ansible_tools_user_home }}'
-    shell: '{{ ansible_tools_user_shell }}'
-    comment: '{{ ansible_tools_user_comment }}'
-    password: '{{ ansible_tools_user_password | string | password_hash("sha512") }}'
+    name: "{{ ansible_tools_user_username | default('ansible') }}"
+    home: "{{ ansible_tools_user_home | default('/home/ansible') }}"
+    shell: "{{ ansible_tools_user_shell | default('/bin/bash') }}"
+    comment: "{{ ansible_tools_user_comment | default('automate all the tings') }}"
+    password: "{{ ansible_tools_user_password | string | password_hash('sha512') }}"
     state: present
     append: yes
 
