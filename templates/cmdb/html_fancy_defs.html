@@ -235,7 +235,7 @@
 
     <h1><button onclick="history.back()">&#9665;</button>&nbsp;${title}</h1>
     <span id="top"><a href="#">Back to top</a></span>
-    <span id="clear_settings"><a href="javascript:window.localStorage.clear('columnVisibility'); location.reload();" title="If things are acting weird, press this button">Clear settings</a></span> 
+    <span id="clear_settings"><a href="javascript:window.localStorage.clear('columnVisibility'); location.reload();" title="If things are acting weird, press this button">Clear settings</a></span>
     <span id="generated">{{ ansible_tools_cmdb_tpl_generated_on | default('Generated on') }} <span class="detail">${datetime.datetime.now().strftime('{{ ansible_tools_cmdb_tpl_generated_on_time | default('%F %H:%M') }}')}</span>
   </header>
 </%def>
@@ -320,7 +320,7 @@
   collapsed_host_class = "uncollapsed"
   if is_split is False and collapsed is True:
     collapsed_host_class = "collapsed"
-    
+
   collapsed_class = "uncollapsed"
   collapse_toggle_text = "Close all"
   if collapsed is True:
