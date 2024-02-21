@@ -29,6 +29,22 @@
     - ansible_tools_cmdb_template_files is defined
     - ansible_tools_cmdb_template_files | length > 0
 
+- name: (ansible_tools) copy CMDB static images files
+  template:
+    src: ../templates/cmdb/static/images/{{ item }}
+    dest: "{{ ansible_tools_cmdb_static_images_dir | default('/var/www/html/static/images') }}"
+    owner: "{{ ansible_tools_cmdb_dir_owner | default('ansible') }}"
+    mode: "{{ ansible_tools_cmdb_dir_mode | default('0755') }}"
+    group: "{{ ansible_tools_cmdb_dir_group | default('ansible') }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  loop: "{{ ansible_tools_cmdb_static_images_files }}"
+  when:
+    - ansible_tools_cmdb_static_images is defined
+    - ansible_tools_cmdb_static_images | bool
+    - ansible_tools_cmdb_static_images_files is defined
+    - ansible_tools_cmdb_static_images_files | length > 0
+
 - name: (ansible_tools) execute awx-facts2cmdb
   shell: >
     INDEX_UPDATE={{ ansible_tools_cmdb_index_update | default('0') }}
