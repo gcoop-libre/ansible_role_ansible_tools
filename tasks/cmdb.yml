@@ -13,6 +13,22 @@
     - ansible_tools_cmdb_directories is defined
     - ansible_tools_cmdb_directories | length > 0
 
+- name: (ansible_tools) copy CMDB templates
+  template:
+    src: ../templates/cmdb/{{ item }}
+    dest: "{{ ansible_tools_cmdb_template_dir | default('/home/ansible') }}"
+    owner: "{{ ansible_tools_cmdb_dir_owner | default('ansible') }}"
+    mode: "{{ ansible_tools_cmdb_dir_mode | default('0755') }}"
+    group: "{{ ansible_tools_cmdb_dir_group | default('ansible') }}"
+  become: yes
+  become_user: "{{ ansible_tools_user_username }}"
+  loop: "{{ ansible_tools_cmdb_template_files }}"
+  when:
+    - ansible_tools_cmdb_template is defined
+    - ansible_tools_cmdb_template | bool
+    - ansible_tools_cmdb_template_files is defined
+    - ansible_tools_cmdb_template_files | length > 0
+
 - name: (ansible_tools) execute awx-facts2cmdb
   shell: >
     INDEX_UPDATE={{ ansible_tools_cmdb_index_update | default('0') }}
