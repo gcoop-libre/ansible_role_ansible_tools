@@ -19,6 +19,27 @@
         - ansible_tools_http_proxy is defined
         - ansible_tools_http_proxy | bool
 
+    - name: (ansible_tools) test connect AWX/Tower
+      uri:
+        url: "{{ ansible_tools_tower_config_host }}"
+        timeout: "{{ ansible_tools_tower_url_timeout | default(5) }}"
+      register: ansible_tools_tower_url_result
+      environment: "{{ ansible_tools_http_proxy_env }}"
+      no_log: "{{ ansible_tools_no_log | default(true) }}"
+      become: false
+      when:
+        - ansible_tools_tower_config_host is defined
+
+    - name: (ansible_tools) result test connect AWX/Tower
+      debug:
+        msg: >
+          {{ ansible_tools_tower_url_result.status }}
+          {{ ansible_tools_tower_url_result.content_length }}
+          {{ ansible_tools_tower_url_result.server }}
+          {{ ansible_tools_tower_url_result.via | default(omit) }}
+      when:
+        - ansible_tools_tower_url_result is defined
+
     - name: (ansible_tools) include cmdb tasks
       include_tasks: ../tasks/cmdb.yml
       when:
