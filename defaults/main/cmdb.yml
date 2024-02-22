@@ -1,6 +1,7 @@
 ---
 
 ansible_tools_cmdb: false
+ansible_tools_cmdb_dir: /var/www/html
 ansible_tools_cmdb_directories:
   - "{{ ansible_tools_cmdb_template_dir | default('/home/ansible') }}"
   - "{{ ansible_tools_cmdb_static_images_dir | default('/var/www/html/static/images') }}"
