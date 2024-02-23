@@ -1,0 +1,29 @@
+---
+
+- name: WoL host, wait for Online and gather facts
+  hosts: [all]
+  strategy: "{{ ansible_tools_deploy_strategy | default('free') }}"
+  serial: "{{ ansible_tools_deploy_serial | default('1') }}"
+  gather_facts: false
+  become: "{{ ansible_tools_deploy_become | default(false) }}"
+
+  tasks:
+
+    - name: (ansible_tools) include wakeonlan tasks
+      include_tasks: ../tasks/wakeonlan.yml
+      when:
+        - ansible_tools_wol is defined
+        - ansible_tools_wol | bool
+
+    - name: (ansible_tools) include wait_for tasks
+      include_tasks: ../tasks/wait-for.yml
+      when:
+        - ansible_tools_wait_for is defined
+        - ansible_tools_wait_for | bool
+
+    - name: (ansible_tools) get all facts
+      setup:
+        gather_subset: "{{ ansible_tools_gather_subset | default('all') }}"
+      when:
+        - ansible_tools_gather_facts is defined
+        - ansible_tools_gather_facts | bool
