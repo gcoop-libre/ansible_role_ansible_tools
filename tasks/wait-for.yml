@@ -1,0 +1,14 @@
+---
+
+- name: (ansible_tools) Waiting for host {{ inventory_hostname }} to come back online
+  wait_for:
+    connect_timeout: "{{ ansible_tools_wait_timeout_net | default(5) }}"
+    host: "{{ ansible_host }}"
+    port: "{{ ansible_tools_wait_port | default(22) }}"
+    sleep: "{{ ansible_tools_wait_sleep | default(2) }}"
+    timeout: "{{ ansible_tools_wait_timeout_total | default(60) }}"
+  delegate_to: "{{ ansible_tools_wait_for_delegate_to_host | default('localhost') }}"
+  ignore_errors: "{{ ansible_tools_wait_for_ignore_errors | default(false) }}"
+  when:
+    - ansible_host is defined
+    - ansible_host | length > 0
