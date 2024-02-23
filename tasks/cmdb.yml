@@ -69,6 +69,7 @@
     CMDB_TITLE="{{ ansible_tools_cmdb_tpl_title | default('CMDB') }}"
     CMDB_GROUP_LABEL="{{ ansible_tools_cmdb_tpl_group_label | default('group') }}"
     CMDB_GROUP_DESC="{{ ansible_tools_cmdb_tpl_group_description | default('description') }}"
+    SHOW_GROUP_ALL="{{ ansible_tools_cmdb_show_group_all | default('0') }}"
     {{ ansible_tools_dir | default('/opt/ansible_tools') }}/awx-facts2cmdb
     {{ item }}
     '{{ ansible_tools_cmdb_group | default('.*') }}'
