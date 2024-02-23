@@ -1,0 +1,8 @@
+---
+
+- name: (ansible_tools) Wake host {{ inventory_hostname }} via WoL {{ primary_macaddress }}
+  wakeonlan:
+    mac: "{{ primary_macaddress | default(macaddress) }}"
+    port: "{{ ansible_tools_wol_port | default(9) }}"
+  delegate_to: "{{ ansible_tools_wol_delegate_to_host | default('localhost') }}"
+  ignore_errors: "{{ ansible_tools_wol_ignore_errors | default(false) }}"
